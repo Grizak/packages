@@ -3,7 +3,7 @@ set -euo pipefail
 ROOT="$PWD"
 cd site
 touch .nojekyll
-gpg --armor --export "$GPG_KEY_ID" > key.gpg
+gpg --armor --export "$GPG_KEY_ID" > key.asc
 sign() {
   gpg --batch --yes --pinentry-mode loopback \
       --passphrase "$GPG_PASSPHRASE" \
