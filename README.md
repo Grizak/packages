@@ -25,20 +25,20 @@ Packages are published automatically through GitHub Actions and served via GitHu
 Repository URL:
 
 ```text
-https://packages.isaksweb.xyz/packages/apt
+https://pkg.isaksweb.xyz/apt
 ```
 
 Import the signing key:
 
 ```bash
-curl -fsSL https://packages.isaksweb.xyz/packages/key.gpg | \
+curl -fsSL https://pkg.isaksweb.xyz/key.asc | \
 sudo gpg --dearmor -o /usr/share/keyrings/grizak-archive-keyring.gpg
 ```
 
 Add the repository:
 
 ```bash
-echo "deb [signed-by=/usr/share/keyrings/grizak-archive-keyring.gpg] https://packages.isaksweb.xyz/packages/apt stable main" | \
+echo "deb [signed-by=/usr/share/keyrings/grizak-archive-keyring.gpg] https://pkg.isaksweb.xyz/apt stable main" | \
 sudo tee /etc/apt/sources.list.d/grizak.list
 ```
 
@@ -61,7 +61,7 @@ sudo apt install <package-name>
 Import the signing key:
 
 ```bash
-sudo rpm --import https://packages.isaksweb.xyz/packages/key.gpg
+sudo rpm --import https://pkg.isaksweb.xyz/key.asc
 ```
 
 Create a repository definition:
@@ -69,11 +69,11 @@ Create a repository definition:
 ```ini
 [grizak]
 name=Grizak Packages
-baseurl=https://packages.isaksweb.xyz/packages/rpm
+baseurl=https://pkg.isaksweb.xyz/rpm
 enabled=1
 gpgcheck=1
 repo_gpgcheck=1
-gpgkey=https://packages.isaksweb.xyz/packages/key.gpg
+gpgkey=https://pkg.isaksweb.xyz/key.asc
 ```
 
 Save this as:
@@ -95,7 +95,7 @@ sudo dnf install <package-name>
 Import the repository signing key:
 
 ```bash
-curl -fsSL https://packages.isaksweb.xyz/packages/key.gpg | \
+curl -fsSL https://pkg.isaksweb.xyz/key.asc | \
 gpg --import
 ```
 
@@ -104,7 +104,7 @@ Add the repository to `/etc/pacman.conf`:
 ```ini
 [grizak]
 SigLevel = Required DatabaseOptional
-Server = https://packages.isaksweb.xyz/packages/arch/$arch
+Server = https://pkg.isaksweb.xyz/arch/$arch
 ```
 
 Refresh package databases:
