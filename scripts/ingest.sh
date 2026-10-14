@@ -47,7 +47,8 @@ done
 docker run --rm -v "$PWD/arch/x86_64:/r" archlinux:latest \
   bash -c 'cd /r && rm -f grizak.db* grizak.files* && repo-add grizak.db.tar.zst *.pkg.tar.zst'
 sudo chown -R "$(id -u):$(id -g)" arch
-# Pages doesn't like symlinks, so make real copies
+# Pages doesn't like symlinks, so make real copies and remove the files first if they exist
+rm -rf arch/x86_64/{grizak.db,grizak.files}
 cp -f arch/x86_64/grizak.db.tar.zst    arch/x86_64/grizak.db
 cp -f arch/x86_64/grizak.files.tar.zst arch/x86_64/grizak.files
 sign --detach-sign --no-armor -o arch/x86_64/grizak.db.sig arch/x86_64/grizak.db
