@@ -92,11 +92,22 @@ sudo dnf install <package-name>
 
 ## Arch Linux
 
-Import the repository signing key:
+Download the repository signing key and check its fingerprint against the one published at https://pkg.isaksweb.xyz/fingerprint.txt:
 
 ```bash
-curl -fsSL https://pkg.isaksweb.xyz/key.asc | \
-gpg --import
+curl -fsSL https://pkg.isaksweb.xyz/key.asc -o grizak.asc
+curl -fsSL https://pkg.isaksweb.xyz/fingerprint.txt
+gpg --with-colons --show-keys grizak.asc | awk -F: '/^fpr:/ {print $10; exit}'
+```
+
+The two fingerprints printed by the last two commands must match. If they don't, stop and don't continue.
+
+Import the key into pacman's keyring and mark it as trusted:
+
+```bash
+FPR=$(gpg --with-colons --show-keys grizak.asc | awk -F: '/^fpr:/ {print $10; exit}')
+sudo pacman-key --add grizak.asc
+sudo pacman-key --lsign-key "$FPR"
 ```
 
 Add the repository to `/etc/pacman.conf`:

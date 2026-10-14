@@ -4,6 +4,7 @@ ROOT="$PWD"
 cd site
 touch .nojekyll
 gpg --armor --export "$GPG_KEY_ID" > key.asc
+gpg --with-colons --show-keys key.asc | awk -F: '/^fpr:/ {print $10; exit}' > fingerprint.txt
 sign() {
   gpg --batch --yes --pinentry-mode loopback \
       --passphrase "$GPG_PASSPHRASE" \
@@ -35,7 +36,31 @@ cp "$ROOT"/incoming/*.deb apt/pool/ 2>/dev/null || true
 # ---------- rpm ----------
 mkdir -p rpm
 cp "$ROOT"/incoming/*.rpm rpm/ 2>/dev/null || true
-createrepo_c --update rpm
+
+# rpm --addsign needs the passphrase through gpg's loopback pinentry.
+# Keep it in a 600-mode temp file that is removed on exit.
+PASSFILE="$(mktemp)"
+chmod 600 "$PASSFILE"
+printf '%s' "$GPG_PASSPHRASE" > "$PASSFILE"
+trap 'rm -f "$PASSFILE"' EXIT
+
+rpm_sign() {
+  rpm --define "_gpg_name $GPG_KEY_ID" \
+      --define "__gpg_sign_cmd %{__gpg} --batch --yes --no-verbose --pinentry-mode loopback --passphrase-file $PASSFILE -u %{_gpg_name} -sbo %{__signature_filename} --digest-algo sha256 %{__plaintext_filename}" \
+      --addsign "$@"
+}
+
+shopt -s nullglob
+for f in rpm/*.rpm; do
+  rpm_sign "$f"
+  rpm -K "$f"   # fails the build if the signature doesn't verify
+done
+shopt -u nullglob
+
+# Signing rewrites the RPMs, so regenerate metadata from scratch
+# rather than using --update, which can reuse stale checksums.
+rm -rf rpm/repodata
+createrepo_c rpm
 sign --detach-sign --armor rpm/repodata/repomd.xml
 
 # ---------- pacman ----------
