@@ -1,13 +1,27 @@
 Package: cppmake
+Version: 0.2.2
+Architecture: arm64
+Maintainer: Isak Grönlund <gronlundisak11@gmail.com> (https://isaksweb.xyz)
+Installed-Size: 2624
+Filename: pool/cppmake_0.2.2_linux_arm64.deb
+Size: 1085464
+MD5sum: 5171022f315d9c6d184f3cffa11ecdb9
+SHA1: 49ddde0999b197dc3e679de25a25470b5128672c
+SHA256: a0e499c67699170cb92cfcb97f07656d149f63410bd42acea60440b3e7af0344
+Priority: optional
+Homepage: https://github.com/Grizak/cppmake
+Description: Simple build generator written in go
+
+Package: cppmake
 Version: 0.2.3
 Architecture: arm64
 Maintainer: Isak Grönlund <gronlundisak11@gmail.com> (https://isaksweb.xyz)
 Installed-Size: 2624
 Filename: pool/cppmake_0.2.3_linux_arm64.deb
-Size: 1085464
-MD5sum: 7a3bdd8b9b9bf73a74ba277aa7937ea1
-SHA1: ab30a334aaa4faa2448d5d37713549620063b498
-SHA256: 10d9691cb99760f1a3e822a58eccc3bea8fe4f9f43253f41dc27d4b3ff5ac589
+Size: 1085462
+MD5sum: 620ffc9a8d3225b4344b6357bdf4fda0
+SHA1: 97884023d7b0298395fbd7d65d5253f430023661
+SHA256: d722a23d300f80e58e00beb1b3f92e588d0c49e81b200ecc89c40b803f497ca4
 Priority: optional
 Homepage: https://github.com/Grizak/cppmake
 Description: Simple build generator written in go
