@@ -19,7 +19,7 @@ cp "$ROOT"/incoming/*.deb apt/pool/ 2>/dev/null || true
   for arch in amd64 arm64; do
     d=dists/stable/main/binary-$arch
     mkdir -p "$d"
-    dpkg-scanpackages --arch "$arch" pool > "$d/Packages"
+    dpkg-scanpackages -- --arch "$arch" pool > "$d/Packages"
     gzip -9kf "$d/Packages"
   done
   apt-ftparchive \
@@ -37,28 +37,31 @@ cp "$ROOT"/incoming/*.deb apt/pool/ 2>/dev/null || true
 mkdir -p rpm
 cp "$ROOT"/incoming/*.rpm rpm/ 2>/dev/null || true
 
-# rpm --addsign needs the passphrase through gpg's loopback pinentry.
-# Keep it in a 600-mode temp file that is removed on exit.
 PASSFILE="$(mktemp)"
 chmod 600 "$PASSFILE"
 printf '%s' "$GPG_PASSPHRASE" > "$PASSFILE"
 trap 'rm -f "$PASSFILE"' EXIT
 
-rpm_sign() {
-  rpm --define "_gpg_name $GPG_KEY_ID" \
-      --define "__gpg_sign_cmd %{__gpg} --batch --yes --no-verbose --pinentry-mode loopback --passphrase-file $PASSFILE -u %{_gpg_name} -sbo %{__signature_filename} --digest-algo sha256 %{__plaintext_filename}" \
-      --addsign "$@"
-}
+RPM_MACROS=(
+  --define "_gpg_name $GPG_KEY_ID"
+  --define "_gpg_sign_cmd_extra_args --pinentry-mode loopback --passphrase-file $PASSFILE"
+)
+
+# Import the public key into rpm's keyring so verification can succeed
+rpm --import key.asc
 
 shopt -s nullglob
 for f in rpm/*.rpm; do
-  rpm_sign "$f"
-  rpm -K "$f"   # fails the build if the signature doesn't verify
+  rpm --delsign "$f" >/dev/null 2>&1 || true   # drop any stale signatures
+  rpm "${RPM_MACROS[@]}" --addsign "$f"
+  if ! rpm -K "$f" | grep -q 'digests signatures OK'; then
+    echo "Signature check failed for $f" >&2
+    rpm -K -vv "$f" >&2 || true
+    exit 1
+  fi
 done
 shopt -u nullglob
 
-# Signing rewrites the RPMs, so regenerate metadata from scratch
-# rather than using --update, which can reuse stale checksums.
 rm -rf rpm/repodata
 createrepo_c rpm
 sign --detach-sign --armor rpm/repodata/repomd.xml
