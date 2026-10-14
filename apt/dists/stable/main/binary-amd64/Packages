@@ -1,0 +1,14 @@
+Package: wick
+Version: 3.1.8
+Architecture: amd64
+Maintainer: Isak Grönlund <gronlundisak11@gmail.com> (https://isaksweb.xyz)
+Installed-Size: 155609
+Filename: pool/wick_3.1.8_linux_amd64.deb
+Size: 62902456
+MD5sum: 4d5bcde5b2ee1051a04ca3bfcc93e68d
+SHA1: 071da4861200ff25867abab80a31411ebab2b07c
+SHA256: b5193a5ad3598b6c045574cdbb80fad799bdd673826b480ff5bcddb2fd1505e7
+Priority: optional
+Homepage: https://github.com/Grizak/Wick
+Description: WICK Programming Language - A simple and efficient programming language for modern development.
+
