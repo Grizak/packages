@@ -19,7 +19,7 @@ cp "$ROOT"/incoming/*.deb apt/pool/ 2>/dev/null || true
   for arch in amd64 arm64; do
     d=dists/stable/main/binary-$arch
     mkdir -p "$d"
-    dpkg-scanpackages -- --arch "$arch" pool > "$d/Packages"
+    dpkg-scanpackages --multiversion --arch "$arch" pool > "$d/Packages"
     gzip -9kf "$d/Packages"
   done
   apt-ftparchive \
