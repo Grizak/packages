@@ -67,16 +67,45 @@ createrepo_c rpm
 sign --detach-sign --armor rpm/repodata/repomd.xml
 
 # ---------- pacman ----------
-mkdir -p arch/x86_64
-cp "$ROOT"/incoming/*.pkg.tar.zst arch/x86_64/ 2>/dev/null || true
-for f in arch/x86_64/*.pkg.tar.zst; do
-  [ -f "$f.sig" ] || sign --detach-sign --no-armor -o "$f.sig" "$f"
+for pkg in "$ROOT"/incoming/*.pkg.tar.zst; do
+  [ -f "$pkg" ] || continue
+  parch="$(tar -xOf "$pkg" .PKGINFO | awk -F' = ' '/^arch = /{print $2; exit}')"
+  case "$parch" in
+    x86_64|aarch64)
+      mkdir -p "arch/$parch"
+      cp "$pkg" "arch/$parch/"
+      ;;
+    any)
+      # arch=any packages go into every architecture directory
+      for a in x86_64 aarch64; do
+        mkdir -p "arch/$a"
+        cp "$pkg" "arch/$a/"
+      done
+      ;;
+    *)
+      echo "Unexpected arch '$parch' in $pkg" >&2
+      exit 1
+      ;;
+  esac
 done
-docker run --rm -v "$PWD/arch/x86_64:/r" archlinux:latest \
-  bash -c 'cd /r && rm -f grizak.db* grizak.files* && repo-add grizak.db.tar.zst *.pkg.tar.zst'
-sudo chown -R "$(id -u):$(id -g)" arch
-# Pages doesn't like symlinks, so make real copies and remove the files first if they exist
-rm -rf arch/x86_64/{grizak.db,grizak.files}
-cp -f arch/x86_64/grizak.db.tar.zst    arch/x86_64/grizak.db
-cp -f arch/x86_64/grizak.files.tar.zst arch/x86_64/grizak.files
-sign --detach-sign --no-armor -o arch/x86_64/grizak.db.sig arch/x86_64/grizak.db
+
+for dir in arch/*/; do
+  parch="$(basename "$dir")"
+  shopt -s nullglob
+  pkgs=("$dir"*.pkg.tar.zst)
+  shopt -u nullglob
+  [ ${#pkgs[@]} -gt 0 ] || { rmdir "$dir" 2>/dev/null || true; continue; }
+
+  for f in "${pkgs[@]}"; do
+    [ -f "$f.sig" ] || sign --detach-sign --no-armor -o "$f.sig" "$f"
+  done
+
+  docker run --rm -v "$PWD/$dir:/r" archlinux:latest \
+    bash -c 'cd /r && rm -f grizak.db* grizak.files* && repo-add grizak.db.tar.zst *.pkg.tar.zst'
+
+  sudo chown -R "$(id -u):$(id -g)" "$dir"
+  rm -rf "$dir"{grizak.db,grizak.files}
+  cp -f "$dir/grizak.db.tar.zst"    "$dir/grizak.db"
+  cp -f "$dir/grizak.files.tar.zst" "$dir/grizak.files"
+  sign --detach-sign --no-armor -o "$dir/grizak.db.sig" "$dir/grizak.db"
+done
