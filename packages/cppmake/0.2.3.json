@@ -6,28 +6,28 @@
       {
         "installcommand": "sudo apt install cppmake",
         "path": "apt/pool/cppmake_0.2.3_linux_amd64.deb",
-        "size": 1179228,
-        "sha256": "95e9a8da9d8f32aaa5e1895f1353b26ba621ddda59dd5d6f0701a1f37d67a09e"
+        "size": 1179230,
+        "sha256": "76d27a635b842cfff536e7f87266755d69c4a33cf7f764cd0808448cabbc9b76"
       },
       {
         "installcommand": "sudo apt install cppmake",
         "path": "apt/pool/cppmake_0.2.3_linux_arm64.deb",
         "size": 1085466,
-        "sha256": "c34067850d8532e71a5a6b3e1d754d33ec4b354373f332118d53f2c08b8d99e4"
+        "sha256": "2adb1980606a3c8b282dcd18c302ca14603eb2d09387ea0f9e8fdce061262542"
       }
     ],
     "arch": [
       {
         "installcommand": "sudo pacman -S cppmake",
         "path": "arch/aarch64/cppmake_0.2.3_linux_arm64.pkg.tar.zst",
-        "size": 1095638,
-        "sha256": "acf90b16d3cc98ea0829d4bc3ad5ef7a4b90546305beca94fba8ffc4afbc2464"
+        "size": 1095641,
+        "sha256": "748060128444b0c368c8f831432028c55409baefee6efaa5cd2c8ce674571e17"
       },
       {
         "installcommand": "sudo pacman -S cppmake",
         "path": "arch/x86_64/cppmake_0.2.3_linux_amd64.pkg.tar.zst",
-        "size": 1198877,
-        "sha256": "47026114bc926f0a29cae44f082a5c225144f71babf5bb9964199d87945fbe6b"
+        "size": 1198872,
+        "sha256": "f40845097307691c6bc173ade7d9cead09b28b47c59e1c28c1c40ecbeef604cf"
       },
       {
         "installcommand": "sudo pacman -S cppmake",
@@ -40,18 +40,18 @@
       {
         "installcommand": "sudo dnf install cppmake",
         "path": "rpm/cppmake_0.2.3_linux_amd64.rpm",
-        "size": 1209111,
-        "sha256": "b0e2ca3b96e5cabdf291f3ef543623ed5f70e4aee9aecd18b695fb3bbea191e0"
+        "size": 1209116,
+        "sha256": "4ac7f0ae8c244416b169ac24bf8997b7333d5dc2484c5debd81de46035a62b1b"
       },
       {
         "installcommand": "sudo dnf install cppmake",
         "path": "rpm/cppmake_0.2.3_linux_arm64.rpm",
-        "size": 1111525,
-        "sha256": "320cf2d21222323814dc75628017c5aba57f8f9cbd66eb4fce9563348a8541b6"
+        "size": 1111528,
+        "sha256": "34659d34786f680565796032b54a72b006d8e7c225d8ed9030e262feaa9723d5"
       }
     ]
   },
   "description": "Simple build generator written in go",
-  "website": "",
-  "maintainer": ""
+  "website": "https://github.com/Grizak/cppmake",
+  "maintainer": "Isak Grönlund \u003cgronlundisak11@gmail.com\u003e (https://isaksweb.xyz)"
 }

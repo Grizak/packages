@@ -23,11 +23,11 @@
         "installcommand": "sudo dnf install wick",
         "path": "rpm/wick_3.1.8_linux_amd64.rpm",
         "size": 62918772,
-        "sha256": "0053a6ae167b93e071e46845c7b383aafd2871739a3a087cb7565e81850767ca"
+        "sha256": "bdbe296ff521cd13ae27f30afd2310ddf3f6398ed56194091b592b9f5d5c9624"
       }
     ]
   },
   "description": "WICK Programming Language - A simple and efficient programming language for modern development.",
-  "website": "",
-  "maintainer": ""
+  "website": "https://github.com/Grizak/Wick",
+  "maintainer": "Isak Grönlund \u003cgronlundisak11@gmail.com\u003e (https://isaksweb.xyz)"
 }

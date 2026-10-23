@@ -35,17 +35,17 @@
         "installcommand": "sudo dnf install cppmake",
         "path": "rpm/cppmake_0.2.2_linux_amd64.rpm",
         "size": 1180275,
-        "sha256": "656440f009e00c606622b2647dfd5f89a0dbc3401c6c055d44f58146028d8176"
+        "sha256": "71ed3b70d7bb4de7c6846d7696c6258d3ee340c85a4af4abdb1e83c4eeb059a4"
       },
       {
         "installcommand": "sudo dnf install cppmake",
         "path": "rpm/cppmake_0.2.2_linux_arm64.rpm",
         "size": 1086777,
-        "sha256": "49dae15c738b77103efafcea642baffc0046fd7c5ada7afb52a0f730e6c77bfb"
+        "sha256": "1bfe19068f600252256caad6a135074d7980282f3f78c1c638102c59693d2b8a"
       }
     ]
   },
   "description": "Simple build generator written in go",
-  "website": "",
-  "maintainer": ""
+  "website": "https://github.com/Grizak/cppmake",
+  "maintainer": "Isak Grönlund \u003cgronlundisak11@gmail.com\u003e (https://isaksweb.xyz)"
 }
