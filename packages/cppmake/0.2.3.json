@@ -6,28 +6,28 @@
       {
         "installcommand": "sudo apt install cppmake",
         "path": "apt/pool/cppmake_0.2.3_linux_amd64.deb",
-        "size": 1179238,
-        "sha256": "b144698aa21c341501e4b823ef6a7f8a9bfb4a226e8e2c8f7112304298e8eebc"
+        "size": 1179236,
+        "sha256": "addd9254b4b307c2a3b31bef29651fbce89d81583fbd2c2884f049d5e1f297a4"
       },
       {
         "installcommand": "sudo apt install cppmake",
         "path": "apt/pool/cppmake_0.2.3_linux_arm64.deb",
-        "size": 1085466,
-        "sha256": "19372cc22f81f28290292163b848bd73739d6fd0edacc506280b3e32225010b8"
+        "size": 1085476,
+        "sha256": "eb2d363322094c0a903e689233adbcec43fd93467e1adee534ce1d2f1cf6266e"
       }
     ],
     "arch": [
       {
         "installcommand": "sudo pacman -S cppmake",
         "path": "arch/aarch64/cppmake_0.2.3_linux_arm64.pkg.tar.zst",
-        "size": 1095643,
-        "sha256": "11340e5cadb461158c7caffb89be93d86b83da107866fc1eaf7b39eb38f88d0c"
+        "size": 1095646,
+        "sha256": "9768800e2cf9fcb2173390646e9dc5d87cedd48f09a4a838bfcb33bda2b502e0"
       },
       {
         "installcommand": "sudo pacman -S cppmake",
         "path": "arch/x86_64/cppmake_0.2.3_linux_amd64.pkg.tar.zst",
-        "size": 1198892,
-        "sha256": "0f7bc3e4a4ccf6b57b6d149d6be221389909f079470a599c381f4d151ee2ecee"
+        "size": 1198874,
+        "sha256": "1c82985f13b2c421e302001a1325ae233ffb4895d334f8a94900f0dadbe5c41a"
       },
       {
         "installcommand": "sudo pacman -S cppmake",
@@ -40,14 +40,14 @@
       {
         "installcommand": "sudo dnf install cppmake",
         "path": "rpm/cppmake_0.2.3_linux_amd64.rpm",
-        "size": 1209121,
-        "sha256": "9921c163a25e08d4d812a590e5c84161591fd608aea39e6792ffaf157ed00f0c"
+        "size": 1209118,
+        "sha256": "fb40eb515545e997d0763a8ad12383f06e2532a864554b4f5d16ebf65c737bc1"
       },
       {
         "installcommand": "sudo dnf install cppmake",
         "path": "rpm/cppmake_0.2.3_linux_arm64.rpm",
-        "size": 1111530,
-        "sha256": "436f2c81a1dd7a4037addd2cb7d879e173895ce09914852db4179840172a72f0"
+        "size": 1111652,
+        "sha256": "69c0ae6c478169055aa7d4e8ca8b966c2061e3b0c5d9cf5a54b6082d852577a4"
       }
     ]
   },
