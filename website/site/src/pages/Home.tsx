@@ -1,34 +1,52 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { fetchIndex } from "../api";
 import { useFetch } from "../useFetch";
 import { sortVersionsDesc } from "../utils";
 
 export default function Home() {
   const { data, error, loading } = useFetch(fetchIndex, []);
+  const { search } = useLocation();
+
+  useEffect(() => {
+    const section = new URLSearchParams(search).get("section");
+    if (!section) return;
+
+    document.getElementById(section)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, [search]);
 
   return (
     <>
-      <header className="mb-16">
+      <header id="top" className="mb-16">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-5">
-          <a
-            href="#"
+          <Link
+            to="/?section=top"
             className="flex items-center gap-3 font-semibold tracking-wide text-white"
           >
             <span className="grid size-9 place-items-center rounded-lg border border-cyan-300/30 bg-cyan-300/10 font-mono text-sm text-cyan-200">
               G
             </span>
             GRIZAK <span className="text-slate-500">/ PACKAGES</span>
-          </a>
+          </Link>
           <nav
             aria-label="Main navigation"
             className="flex gap-5 text-sm text-slate-400"
           >
-            <a className="transition hover:text-cyan-200" href="#packages">
+            <Link
+              className="transition hover:text-cyan-200"
+              to="/?section=packages"
+            >
               Packages
-            </a>
-            <a className="transition hover:text-cyan-200" href="#install">
+            </Link>
+            <Link
+              className="transition hover:text-cyan-200"
+              to="/?section=install"
+            >
               Quick start
-            </a>
+            </Link>
           </nav>
         </div>
 
@@ -61,12 +79,12 @@ export default function Home() {
               ),
             )}
           </div>
-          <a
-            href="#install"
+          <Link
+            to="/?section=install"
             className="mt-9 inline-flex items-center gap-2 rounded-md bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
           >
             Configure a repository <span aria-hidden="true">↓</span>
-          </a>
+          </Link>
         </div>
       </header>
 
