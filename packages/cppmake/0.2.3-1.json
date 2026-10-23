@@ -1,0 +1,29 @@
+{
+  "name": "cppmake",
+  "version": "0.2.3-1",
+  "pkgs": {
+    "arch": [
+      {
+        "installcommand": "sudo pacman -S cppmake",
+        "path": "arch/aarch64/cppmake_0.2.3_linux_arm64.pkg.tar.zst",
+        "size": 1095635,
+        "sha256": "077aa69627b515ae317198436ab274c4a4dd2dc3ef9c9b700fa159c9d573e1a4"
+      },
+      {
+        "installcommand": "sudo pacman -S cppmake",
+        "path": "arch/x86_64/cppmake_0.2.3_linux_amd64.pkg.tar.zst",
+        "size": 1198871,
+        "sha256": "0b6f253fc29dd0369e387df13c931a6747b5bbc81ffa0be02957a5533f63d821"
+      },
+      {
+        "installcommand": "sudo pacman -S cppmake",
+        "path": "arch/x86_64/cppmake_0.2.3_linux_arm64.pkg.tar.zst",
+        "size": 1097402,
+        "sha256": "2a89d7c8b47a7bc7408dad85abf5bf819084d555376559321976118a513a890c"
+      }
+    ]
+  },
+  "description": "Simple build generator written in go",
+  "website": "",
+  "maintainer": ""
+}

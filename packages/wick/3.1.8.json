@@ -1,0 +1,25 @@
+{
+  "name": "wick",
+  "version": "3.1.8",
+  "pkgs": {
+    "apt": [
+      {
+        "installcommand": "sudo apt install wick",
+        "path": "apt/pool/wick_3.1.8_linux_amd64.deb",
+        "size": 62902456,
+        "sha256": "b5193a5ad3598b6c045574cdbb80fad799bdd673826b480ff5bcddb2fd1505e7"
+      }
+    ],
+    "rpm": [
+      {
+        "installcommand": "sudo dnf install wick",
+        "path": "rpm/wick_3.1.8_linux_amd64.rpm",
+        "size": 62918772,
+        "sha256": "040b48afa4780e26c2ed0d468fa5e4ba790214e216589acae9c6f261424282b3"
+      }
+    ]
+  },
+  "description": "WICK Programming Language - A simple and efficient programming language for modern development.",
+  "website": "",
+  "maintainer": ""
+}

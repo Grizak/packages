@@ -1,0 +1,37 @@
+{
+  "name": "cppmake",
+  "version": "0.2.2",
+  "pkgs": {
+    "apt": [
+      {
+        "installcommand": "sudo apt install cppmake",
+        "path": "apt/pool/cppmake_0.2.2_linux_amd64.deb",
+        "size": 1179222,
+        "sha256": "c31270601ed439e9111372eefb5032fe5cf84fa0142bc6436346df5b3cf8242b"
+      },
+      {
+        "installcommand": "sudo apt install cppmake",
+        "path": "apt/pool/cppmake_0.2.2_linux_arm64.deb",
+        "size": 1085464,
+        "sha256": "a0e499c67699170cb92cfcb97f07656d149f63410bd42acea60440b3e7af0344"
+      }
+    ],
+    "rpm": [
+      {
+        "installcommand": "sudo dnf install cppmake",
+        "path": "rpm/cppmake_0.2.2_linux_amd64.rpm",
+        "size": 1180275,
+        "sha256": "663c1fcc8270bc43114ff2e38282f7173ccc9efd052b9aa01216c7106dce3eb5"
+      },
+      {
+        "installcommand": "sudo dnf install cppmake",
+        "path": "rpm/cppmake_0.2.2_linux_arm64.rpm",
+        "size": 1086777,
+        "sha256": "ab17cc6966f68d0add28f883cab9dce35e8cb8ec404b0f21407c604623e7f393"
+      }
+    ]
+  },
+  "description": "Simple build generator written in go",
+  "website": "",
+  "maintainer": ""
+}
