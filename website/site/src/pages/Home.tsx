@@ -244,8 +244,8 @@ sudo apt install <package-name>`}</code>
             <pre className="code-panel">
               <code>{`sudo rpm --import https://pkg.isaksweb.xyz/key.asc`}</code>
             </pre>
-            <p className="mb-2 mt-5 text-xs uppercase tracking-wider text-slate-500">
-              Create /etc/yum.repos.d/grizak.repo
+            <p className="mb-2 mt-5 text-xs tracking-wider text-slate-500">
+              CREATE /etc/yum.repos.d/grizak.repo
             </p>
             <pre className="code-panel">
               <code>{`[grizak]
