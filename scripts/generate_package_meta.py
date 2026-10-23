@@ -12,34 +12,58 @@ def run(*args):
 	return subprocess.check_output(args, text=True, stderr=subprocess.PIPE).strip()
 
 
-def deb_upstream(version):
-	# "1:1.2.0-1ubuntu1" -> "1.2.0"
-	without_epoch = version.split(":", 1)[-1]
-	return without_epoch.rsplit("-", 1)[0]
+def clean(value):
+    # rpm prints "(none)" for unset tags
+    return "" if value in ("(none)", "") else value
 
+def field(fields, index):
+    return clean(fields[index]) if index < len(fields) else ""
+
+def deb_upstream(version):
+    # "1:1.2.0-1ubuntu1" -> "1.2.0"
+    without_epoch = version.split(":", 1)[-1]
+    return without_epoch.rsplit("-", 1)[0]
+
+def arch_upstream(version):
+    # "1:0.2.2-1" -> "0.2.2"
+    without_epoch = version.split(":", 1)[-1]
+    return without_epoch.rsplit("-", 1)[0]
 
 def deb_metadata(path):
+	# Description goes last so its continuation lines don't shift the other indexes
 	fields = run(
 		"dpkg-deb", "-W",
-		"--showformat=${Package}\\n${Version}\\n${Description}\\n",
+		"--showformat=${Package}\\n${Version}\\n${Maintainer}\\n${Homepage}\\n${Description}\\n",
 		str(path),
 	).splitlines()
-	name, raw_version = fields[:2]
-	description = fields[2] if len(fields) > 2 else ""
-	return name, deb_upstream(raw_version), description, f"sudo apt install {name}", "apt"
+	name = field(fields, 0)
+	return {
+		"name": name,
+		"version": deb_upstream(field(fields, 1)),
+		"maintainer": field(fields, 2),
+		"website": field(fields, 3),
+		"description": field(fields, 4),
+		"install": f"sudo apt install {name}",
+		"manager": "apt",
+	}
 
 
 def rpm_metadata(path):
-	# %{VERSION} is upstream only; %{RELEASE} is the packaging revision
-	fields = run("rpm", "-qp", "--queryformat", "%{NAME}\\n%{VERSION}\\n%{SUMMARY}\\n", str(path)).splitlines()
-	name, version = fields[:2]
-	return name, version, fields[2] if len(fields) > 2 else "", f"sudo dnf install {name}", "rpm"
-
-
-def arch_upstream(version):
-	# "1:0.2.2-1" -> "0.2.2"
-	without_epoch = version.split(":", 1)[-1]
-	return without_epoch.rsplit("-", 1)[0]
+	fields = run(
+		"rpm", "-qp", "--queryformat",
+		"%{NAME}\\n%{VERSION}\\n%{SUMMARY}\\n%{URL}\\n%{PACKAGER}\\n",
+		str(path),
+	).splitlines()
+	name = field(fields, 0)
+	return {
+		"name": name,
+		"version": field(fields, 1),
+		"description": field(fields, 2),
+		"website": field(fields, 3),
+		"maintainer": field(fields, 4),
+		"install": f"sudo dnf install {name}",
+		"manager": "rpm",
+	}
 
 
 def arch_metadata(path):
@@ -51,9 +75,15 @@ def arch_metadata(path):
 			fields.setdefault(key, []).append(value)
 
 	name = fields["pkgname"][0]
-	version = arch_upstream(fields["pkgver"][0])
-	description = fields.get("pkgdesc", [""])[0]
-	return name, version, description, f"sudo pacman -S {name}", "arch"
+	return {
+		"name": name,
+		"version": arch_upstream(fields["pkgver"][0]),
+		"description": fields.get("pkgdesc", [""])[0],
+		"website": fields.get("url", [""])[0],
+		"maintainer": fields.get("packager", [""])[0],
+		"install": f"sudo pacman -S {name}",
+		"manager": "arch",
+	}
 
 
 package_dirs = [
