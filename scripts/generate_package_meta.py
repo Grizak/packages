@@ -2,6 +2,7 @@ import hashlib
 import json
 import subprocess
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 root = Path(sys.argv[1])
@@ -13,21 +14,24 @@ def run(*args):
 
 
 def clean(value):
-    # rpm prints "(none)" for unset tags
-    return "" if value in ("(none)", "") else value
+	# rpm prints "(none)" for unset tags
+	return "" if value in ("(none)", "") else value
+
 
 def field(fields, index):
-    return clean(fields[index]) if index < len(fields) else ""
+	return clean(fields[index]) if index < len(fields) else ""
 
-def deb_upstream(version):
-    # "1:1.2.0-1ubuntu1" -> "1.2.0"
-    without_epoch = version.split(":", 1)[-1]
-    return without_epoch.rsplit("-", 1)[0]
 
-def arch_upstream(version):
-    # "1:0.2.2-1" -> "0.2.2"
-    without_epoch = version.split(":", 1)[-1]
-    return without_epoch.rsplit("-", 1)[0]
+def upstream(version):
+	# Strips epoch and packaging revision:
+	# "1:1.2.0-1ubuntu1" -> "1.2.0", "1:0.2.2-1" -> "0.2.2", "2.0-rc1-1" -> "2.0-rc1"
+	without_epoch = version.split(":", 1)[-1]
+	return without_epoch.rsplit("-", 1)[0]
+
+
+def first_nonempty(*values):
+	return next((v for v in values if v), "")
+
 
 def deb_metadata(path):
 	# Description goes last so its continuation lines don't shift the other indexes
@@ -39,7 +43,7 @@ def deb_metadata(path):
 	name = field(fields, 0)
 	return {
 		"name": name,
-		"version": deb_upstream(field(fields, 1)),
+		"version": upstream(field(fields, 1)),
 		"maintainer": field(fields, 2),
 		"website": field(fields, 3),
 		"description": field(fields, 4),
@@ -57,7 +61,7 @@ def rpm_metadata(path):
 	name = field(fields, 0)
 	return {
 		"name": name,
-		"version": field(fields, 1),
+		"version": field(fields, 1),  # %{VERSION} is already upstream
 		"description": field(fields, 2),
 		"website": field(fields, 3),
 		"maintainer": field(fields, 4),
@@ -77,7 +81,7 @@ def arch_metadata(path):
 	name = fields["pkgname"][0]
 	return {
 		"name": name,
-		"version": arch_upstream(fields["pkgver"][0]),
+		"version": upstream(fields["pkgver"][0]),
 		"description": fields.get("pkgdesc", [""])[0],
 		"website": fields.get("url", [""])[0],
 		"maintainer": fields.get("packager", [""])[0],
@@ -92,24 +96,35 @@ package_dirs = [
 	(site / "arch", "*.pkg.tar.zst", arch_metadata),
 ]
 
+# Collect metadata and file details for every package
 packages = []
 for directory, pattern, extract_metadata in package_dirs:
 	if not directory.exists():
 		continue
 
 	for path in sorted(directory.rglob(pattern)):
-		name, version, description, install, manager = extract_metadata(path)
+		info = extract_metadata(path)
 		packages.append({
-			"name": name,
-			"version": version,
-			"manager": manager,
+			**info,
 			"path": path.relative_to(site).as_posix(),
 			"size": path.stat().st_size,
 			"sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
-			"description": description,
-			"install": install,
 		})
 
+# Share website and maintainer across all artifacts of the same release,
+# so the first-artifact-wins behavior in Go doesn't matter
+by_release = defaultdict(list)
+for pkg in packages:
+	by_release[(pkg["name"], pkg["version"])].append(pkg)
+
+for group in by_release.values():
+	website = first_nonempty(*(p["website"] for p in group))
+	maintainer = first_nonempty(*(p["maintainer"] for p in group))
+	for p in group:
+		p["website"] = website
+		p["maintainer"] = maintainer
+
+# Write the output atomically
 output = root / "package-meta.json"
 temporary = output.with_suffix(".json.tmp")
 temporary.write_text(
