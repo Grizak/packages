@@ -109,3 +109,6 @@ for dir in arch/*/; do
   cp -f "$dir/grizak.files.tar.zst" "$dir/grizak.files"
   sign --detach-sign --no-armor -o "$dir/grizak.db.sig" "$dir/grizak.db"
 done
+
+# ---------- Human-readable website meta ----------
+python3 "$ROOT/scripts/generate_package_meta.py" "$ROOT"

@@ -25,6 +25,14 @@ jobs:
       - name: Install tooling
         run: sudo apt-get update && sudo apt-get install -y dpkg-dev apt-utils createrepo-c gnupg
 
+      - name: Install go
+        uses: actions/setup-go@v7
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
       - name: Import signing key
         run: echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
 
@@ -36,6 +44,20 @@ jobs:
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: tools/scripts/ingest.sh
+
+      - name: Build website
+        run: |
+          cd tools/website/site
+          if git diff --name-only HEAD~1 | grep -q "website/site/"; then
+            pnpm build
+            rsync -av --exclude=index.json dist/ ../../../site/
+          else
+            echo "No changes to website/site/, skipping build"
+          fi
+
+      - name: Generate site
+        run: |
+          go run tools/website/generate.go -site-dir site/ -meta-file package-meta.json
 
       - name: Publish
         working-directory: site
