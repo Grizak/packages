@@ -54,8 +54,8 @@ jobs:
           # else
           #   echo "No changes to website/site/, skipping build"
           # fi
-          return 0
-
+          exit 0
+          
       - name: Generate site
         run: |
           go run tools/website/generate.go -site-dir site/ -meta-file package-meta.json
