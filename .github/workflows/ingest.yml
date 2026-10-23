@@ -63,6 +63,7 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         run: |
           cd tools/website/site
+          pnpm install
           pnpm build
           rsync -av --exclude=index.json dist/ ../../../site/
 
