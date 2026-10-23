@@ -12,7 +12,7 @@ import (
 
 var (
 	SitePath = flag.String("site-dir", "site/", "The path to the site directory")
-	MetaPath = flag.String("meta-path", "package-meta.json", "The path to the metadata file")
+	MetaPath = flag.String("meta-file", "package-meta.json", "The path to the metadata file")
 )
 
 type Metadata struct {
