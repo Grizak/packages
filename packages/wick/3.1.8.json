@@ -10,12 +10,20 @@
         "sha256": "b5193a5ad3598b6c045574cdbb80fad799bdd673826b480ff5bcddb2fd1505e7"
       }
     ],
+    "arch": [
+      {
+        "installcommand": "sudo pacman -S wick",
+        "path": "arch/x86_64/wick_3.1.8_linux_amd64.pkg.tar.zst",
+        "size": 61264250,
+        "sha256": "a0904cc8ba89459f32d6419e70eddba92b7bf907d2ce9b1a24e4426c7a5e89af"
+      }
+    ],
     "rpm": [
       {
         "installcommand": "sudo dnf install wick",
         "path": "rpm/wick_3.1.8_linux_amd64.rpm",
         "size": 62918772,
-        "sha256": "040b48afa4780e26c2ed0d468fa5e4ba790214e216589acae9c6f261424282b3"
+        "sha256": "0053a6ae167b93e071e46845c7b383aafd2871739a3a087cb7565e81850767ca"
       }
     ]
   },

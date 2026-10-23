@@ -6,28 +6,48 @@
       {
         "installcommand": "sudo apt install cppmake",
         "path": "apt/pool/cppmake_0.2.3_linux_amd64.deb",
-        "size": 1179230,
-        "sha256": "08f33c069b6e1de5a51216167379a3d90236fbf143ac18efd7b863c0d8bfe954"
+        "size": 1179228,
+        "sha256": "95e9a8da9d8f32aaa5e1895f1353b26ba621ddda59dd5d6f0701a1f37d67a09e"
       },
       {
         "installcommand": "sudo apt install cppmake",
         "path": "apt/pool/cppmake_0.2.3_linux_arm64.deb",
-        "size": 1085472,
-        "sha256": "d97ab3e2d3796722cefa8862e3d2bdabb3c4b5da974c99b68ba54000289f918f"
+        "size": 1085466,
+        "sha256": "c34067850d8532e71a5a6b3e1d754d33ec4b354373f332118d53f2c08b8d99e4"
+      }
+    ],
+    "arch": [
+      {
+        "installcommand": "sudo pacman -S cppmake",
+        "path": "arch/aarch64/cppmake_0.2.3_linux_arm64.pkg.tar.zst",
+        "size": 1095638,
+        "sha256": "acf90b16d3cc98ea0829d4bc3ad5ef7a4b90546305beca94fba8ffc4afbc2464"
+      },
+      {
+        "installcommand": "sudo pacman -S cppmake",
+        "path": "arch/x86_64/cppmake_0.2.3_linux_amd64.pkg.tar.zst",
+        "size": 1198877,
+        "sha256": "47026114bc926f0a29cae44f082a5c225144f71babf5bb9964199d87945fbe6b"
+      },
+      {
+        "installcommand": "sudo pacman -S cppmake",
+        "path": "arch/x86_64/cppmake_0.2.3_linux_arm64.pkg.tar.zst",
+        "size": 1097402,
+        "sha256": "2a89d7c8b47a7bc7408dad85abf5bf819084d555376559321976118a513a890c"
       }
     ],
     "rpm": [
       {
         "installcommand": "sudo dnf install cppmake",
         "path": "rpm/cppmake_0.2.3_linux_amd64.rpm",
-        "size": 1209113,
-        "sha256": "02d24746ffbfa93f18b411262e4f894e395d5d5c04922ecbc6f2b4e359d45c0a"
+        "size": 1209111,
+        "sha256": "b0e2ca3b96e5cabdf291f3ef543623ed5f70e4aee9aecd18b695fb3bbea191e0"
       },
       {
         "installcommand": "sudo dnf install cppmake",
         "path": "rpm/cppmake_0.2.3_linux_arm64.rpm",
         "size": 1111525,
-        "sha256": "32467f2cc314b7ff7b3b20529ee19f41f798857ef138b1590a5f0a239a50e4f1"
+        "sha256": "320cf2d21222323814dc75628017c5aba57f8f9cbd66eb4fce9563348a8541b6"
       }
     ]
   },
