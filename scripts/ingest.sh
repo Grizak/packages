@@ -111,4 +111,4 @@ for dir in arch/*/; do
 done
 
 # ---------- Human-readable website meta ----------
-python3 "$ROOT/scripts/generate_package_meta.py" "$ROOT"
+python3 "$ROOT/tools/scripts/generate_package_meta.py" "$ROOT"
