@@ -36,6 +36,12 @@ def rpm_metadata(path):
 	return name, version, fields[2] if len(fields) > 2 else "", f"sudo dnf install {name}", "rpm"
 
 
+def arch_upstream(version):
+	# "1:0.2.2-1" -> "0.2.2"
+	without_epoch = version.split(":", 1)[-1]
+	return without_epoch.rsplit("-", 1)[0]
+
+
 def arch_metadata(path):
 	info = run("tar", "-xOf", str(path), ".PKGINFO")
 	fields = {}
@@ -45,7 +51,7 @@ def arch_metadata(path):
 			fields.setdefault(key, []).append(value)
 
 	name = fields["pkgname"][0]
-	version = fields["pkgver"][0]
+	version = arch_upstream(fields["pkgver"][0])
 	description = fields.get("pkgdesc", [""])[0]
 	return name, version, description, f"sudo pacman -S {name}", "arch"
 
