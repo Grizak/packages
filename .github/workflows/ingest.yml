@@ -18,7 +18,7 @@ jobs:
       TAG: ${{ github.event.client_payload.tag }}
     steps:
       - uses: actions/checkout@v4
-        with: { path: tools }
+        with: { path: tools, fetch-depth: 0 }
       - uses: actions/checkout@v4
         with: { ref: gh-pages, path: site }
 
@@ -45,15 +45,26 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: tools/scripts/ingest.sh
 
-      - name: Build website
+      - name: Check for changes
+        id: changes
+        run: |
+          base="${{ github.event.before }}"
+          if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ]; then
+            echo "No base commit to compare against, building"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          elif git diff --quiet "$base" HEAD -- website/site/; then
+            echo "No changes to website/site/, skipping build"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build
+        if: steps.changes.outputs.changed == 'true'
         run: |
           cd tools/website/site
-          if git diff --name-only HEAD~1 | grep -q "website/site/"; then
-            pnpm build
-            rsync -av --exclude=index.json dist/ ../../../site/
-          else
-            echo "No changes to website/site/, skipping build"
-          fi
+          pnpm build
+          rsync -av --exclude=index.json dist/ ../../../site/
 
       - name: Generate site
         run: |
