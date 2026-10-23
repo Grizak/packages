@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	SitePath = flag.String("site-path", "site/", "The path to the site directory")
+	SitePath = flag.String("site-dir", "site/", "The path to the site directory")
 	MetaPath = flag.String("meta-path", "package-meta.json", "The path to the metadata file")
 )
 
