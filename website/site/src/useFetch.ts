@@ -22,7 +22,7 @@ export function useFetch<T>(fn: () => Promise<T>, deps: unknown[]): State<T> {
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
+  }, [...deps]);
 
   return state;
 }

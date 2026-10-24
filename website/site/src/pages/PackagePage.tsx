@@ -40,7 +40,9 @@ export default function PackagePage() {
           ← All packages
         </Link>
         <div className="mt-2 flex flex-wrap items-center gap-3">
-          <h1 className="text-3xl font-semibold text-white">{v.name}</h1>
+          <h1 className="min-w-0 break-words text-3xl font-semibold text-white">
+            {v.name}
+          </h1>
           {sortedVersions.length > 1 ? (
             <label className="flex items-center gap-2 text-sm text-slate-400">
               Version
@@ -66,11 +68,11 @@ export default function PackagePage() {
           <p className="mt-2 text-slate-400">{v.description}</p>
         )}
 
-        <dl className="mt-5 grid grid-cols-[auto,1fr] gap-x-4 gap-y-2 text-sm">
+        <dl className="mt-5 grid grid-cols-[auto,minmax(0,1fr)] gap-x-4 gap-y-2 text-sm">
           {v.website && (
             <>
               <dt className="text-slate-500">Website</dt>
-              <dd>
+              <dd className="min-w-0 break-all">
                 <a
                   href={v.website}
                   className="text-cyan-300 hover:underline"
@@ -85,7 +87,7 @@ export default function PackagePage() {
           {v.maintainer && (
             <>
               <dt className="text-slate-500">Maintainer</dt>
-              <dd>{v.maintainer}</dd>
+              <dd className="min-w-0 break-words">{v.maintainer}</dd>
             </>
           )}
         </dl>
@@ -129,7 +131,7 @@ export default function PackagePage() {
                 </div>
                 <a
                   href={`${import.meta.env.BASE_URL}${a.path}`}
-                  className="text-cyan-300 hover:underline"
+                  className="min-w-0 break-all text-cyan-300 hover:underline"
                 >
                   {a.path.split("/").pop()}
                 </a>

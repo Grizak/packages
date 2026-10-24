@@ -20,11 +20,11 @@ export default function Home() {
 
   return (
     <>
-      <header id="top" className="mb-16">
+      <header id="top" className="mb-12 sm:mb-16">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-5">
           <Link
             to="/?section=top"
-            className="flex items-center gap-3 font-semibold tracking-wide text-white"
+            className="flex items-center gap-3 text-sm font-semibold tracking-wide text-white sm:text-base"
           >
             <span className="grid size-9 place-items-center rounded-lg border border-cyan-300/30 bg-cyan-300/10 font-mono text-sm text-cyan-200">
               G
@@ -33,16 +33,16 @@ export default function Home() {
           </Link>
           <nav
             aria-label="Main navigation"
-            className="flex gap-5 text-sm text-slate-400"
+            className="flex w-full justify-between text-sm text-slate-400 sm:w-auto sm:justify-start sm:gap-5"
           >
             <Link
-              className="transition hover:text-cyan-200"
+              className="inline-flex min-h-11 items-center px-2 transition hover:text-cyan-200 sm:px-0"
               to="/?section=packages"
             >
               Packages
             </Link>
             <Link
-              className="transition hover:text-cyan-200"
+              className="inline-flex min-h-11 items-center px-2 transition hover:text-cyan-200 sm:px-0"
               to="/?section=install"
             >
               Quick start
@@ -50,7 +50,7 @@ export default function Home() {
           </nav>
         </div>
 
-        <div className="relative isolate overflow-hidden py-16 sm:py-24">
+        <div className="relative isolate overflow-hidden py-12 sm:py-24">
           <div className="pointer-events-none absolute -right-24 -top-12 -z-10 size-80 rounded-full bg-cyan-400/10 blur-3xl" />
           <p className="mb-5 font-mono text-xs uppercase tracking-[0.28em] text-cyan-300">
             Linux package repositories{" "}
@@ -81,7 +81,7 @@ export default function Home() {
           </div>
           <Link
             to="/?section=install"
-            className="mt-9 inline-flex items-center gap-2 rounded-md bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
+            className="mt-9 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200 sm:w-auto"
           >
             Configure a repository <span aria-hidden="true">↓</span>
           </Link>
@@ -90,7 +90,7 @@ export default function Home() {
 
       <section
         aria-label="Supported platforms"
-        className="mb-12 grid gap-3 rounded-xl border border-white/10 bg-white/[0.025] p-5 sm:grid-cols-3"
+        className="mb-12 grid gap-3 rounded-xl border border-white/10 bg-white/[0.025] p-4 sm:grid-cols-3 sm:p-5"
       >
         <div>
           <p className="font-mono text-[10px] uppercase tracking-wider text-slate-500">
@@ -121,7 +121,7 @@ export default function Home() {
 
       <section
         id="packages"
-        className="scroll-mt-8 border-t border-white/10 py-12"
+        className="scroll-mt-8 border-t border-white/10 py-10 sm:py-12"
       >
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -191,7 +191,7 @@ export default function Home() {
 
       <section
         id="install"
-        className="scroll-mt-8 border-t border-white/10 py-12"
+        className="scroll-mt-8 border-t border-white/10 py-10 sm:py-12"
       >
         <div className="mb-8 max-w-2xl">
           <p className="font-mono text-xs uppercase tracking-[0.22em] text-cyan-300">
@@ -209,7 +209,7 @@ export default function Home() {
         </div>
 
         <div className="grid gap-4 lg:grid-cols-3">
-          <article className="rounded-xl border border-white/10 bg-slate-900/70 p-5">
+          <article className="min-w-0 rounded-xl border border-white/10 bg-slate-900/70 p-4 sm:p-5">
             <div className="mb-5 flex items-center justify-between">
               <h3 className="font-semibold text-white">Debian / Ubuntu</h3>
               <span className="rounded border border-cyan-300/20 px-2 py-1 font-mono text-[10px] text-cyan-200">
@@ -231,7 +231,7 @@ sudo apt install <package-name>`}</code>
             </pre>
           </article>
 
-          <article className="rounded-xl border border-white/10 bg-slate-900/70 p-5">
+          <article className="min-w-0 rounded-xl border border-white/10 bg-slate-900/70 p-4 sm:p-5">
             <div className="mb-5 flex items-center justify-between">
               <h3 className="font-semibold text-white">Fedora / RHEL</h3>
               <span className="rounded border border-violet-300/20 px-2 py-1 font-mono text-[10px] text-violet-200">
@@ -261,7 +261,7 @@ gpgkey=https://pkg.isaksweb.xyz/key.asc`}</code>
             </pre>
           </article>
 
-          <article className="rounded-xl border border-white/10 bg-slate-900/70 p-5">
+          <article className="min-w-0 rounded-xl border border-white/10 bg-slate-900/70 p-4 sm:p-5">
             <div className="mb-5 flex items-center justify-between">
               <h3 className="font-semibold text-white">Arch Linux</h3>
               <span className="rounded border border-emerald-300/20 px-2 py-1 font-mono text-[10px] text-emerald-200">
@@ -304,7 +304,7 @@ sudo pacman -S <package-name>`}</code>
         </div>
       </section>
 
-      <section className="grid gap-8 border-t border-white/10 py-12 md:grid-cols-2">
+      <section className="grid gap-8 border-t border-white/10 py-10 sm:py-12 md:grid-cols-2">
         <div>
           <p className="font-mono text-xs uppercase tracking-[0.22em] text-cyan-300">
             03 / Trust
@@ -320,17 +320,17 @@ sudo pacman -S <package-name>`}</code>
           <dl className="mt-6 divide-y divide-white/10 rounded-lg border border-white/10">
             <div className="flex justify-between gap-4 px-4 py-3 text-sm">
               <dt className="text-slate-400">APT</dt>
-              <dd className="font-mono text-slate-200">
+              <dd className="min-w-0 break-words text-right font-mono text-slate-200">
                 InRelease + Release.gpg
               </dd>
             </div>
             <div className="flex justify-between gap-4 px-4 py-3 text-sm">
               <dt className="text-slate-400">RPM</dt>
-              <dd className="font-mono text-slate-200">Signed repomd.xml</dd>
+              <dd className="min-w-0 break-words text-right font-mono text-slate-200">Signed repomd.xml</dd>
             </div>
             <div className="flex justify-between gap-4 px-4 py-3 text-sm">
               <dt className="text-slate-400">Arch</dt>
-              <dd className="font-mono text-slate-200">
+              <dd className="min-w-0 break-words text-right font-mono text-slate-200">
                 Signed packages + database
               </dd>
             </div>

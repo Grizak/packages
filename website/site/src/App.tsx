@@ -6,7 +6,7 @@ export default function App() {
   return (
     <HashRouter>
       <div className="min-h-screen text-slate-100">
-        <main className="mx-auto max-w-6xl px-5 py-6 sm:px-8 sm:py-10">
+        <main className="mx-auto max-w-6xl px-4 py-5 sm:px-8 sm:py-10">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/packages/:name/:version" element={<PackagePage />} />
