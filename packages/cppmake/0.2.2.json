@@ -29,13 +29,13 @@
         "installcommand": "sudo dnf install cppmake",
         "path": "rpm/cppmake_0.2.2_linux_amd64.rpm",
         "size": 1180275,
-        "sha256": "92e1d87817de60aad88531b9c1c1e5ca90981b5688d15c1e1ab221bb24e077a0"
+        "sha256": "4cddf2386c7fd8286580494420f5ac00bd43d4d53c8b3c718f38a21d36b5f36c"
       },
       {
         "installcommand": "sudo dnf install cppmake",
         "path": "rpm/cppmake_0.2.2_linux_arm64.rpm",
         "size": 1086777,
-        "sha256": "d30e8cde69a9b610dbcb8cca34bd7c050c028790fa0cf00bd858766f012931b9"
+        "sha256": "c4f592a64045ac311ab27a642f8fefc1961361a238175b1465b7aacdc3bfe781"
       }
     ]
   },
