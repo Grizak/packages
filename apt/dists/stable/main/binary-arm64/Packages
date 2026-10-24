@@ -19,9 +19,9 @@ Maintainer: Isak Grönlund <gronlundisak11@gmail.com> (https://isaksweb.xyz)
 Installed-Size: 2624
 Filename: pool/cppmake_0.2.3_linux_arm64.deb
 Size: 1085464
-MD5sum: 554f9343028e13408cb63b7931f08ccb
-SHA1: d715dc49034fb6e8c624f5174f13ed45b98937fe
-SHA256: 689cc859dd8096b651e94869b504dc3541c3239748a86e1615bdc846b7af9a7e
+MD5sum: 4b4bf4ffe419f0545e171481efc09583
+SHA1: 5e032651d2a0485936878e65fe7a753bcf7a6e01
+SHA256: 30e6b1008944cf10a12c31a90e4f2b0e284d501503e629232775dcf059139169
 Priority: optional
 Homepage: https://github.com/Grizak/cppmake
 Description: Simple build generator written in go
