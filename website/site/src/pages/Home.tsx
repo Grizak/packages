@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { fetchIndex } from "../api";
 import { useFetch } from "../useFetch";
@@ -7,6 +7,16 @@ import { sortVersionsDesc } from "../utils";
 export default function Home() {
   const { data, error, loading } = useFetch(fetchIndex, []);
   const { search } = useLocation();
+  const [packageQuery, setPackageQuery] = useState("");
+  const normalizedQuery = packageQuery.trim().toLocaleLowerCase();
+  const filteredPackages =
+    data?.packages.filter(
+      (pkg) =>
+        pkg.name.toLocaleLowerCase().includes(normalizedQuery) ||
+        pkg.versions.some((version) =>
+          version.toLocaleLowerCase().includes(normalizedQuery),
+        ),
+    ) ?? [];
 
   useEffect(() => {
     const section = new URLSearchParams(search).get("section");
@@ -124,7 +134,7 @@ export default function Home() {
         className="scroll-mt-8 border-t border-white/10 py-10 sm:py-12"
       >
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-          <div>
+          <div className="min-w-0">
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-cyan-300">
               01 / Catalog
             </p>
@@ -133,11 +143,31 @@ export default function Home() {
             </h2>
           </div>
           {data && (
-            <p className="font-mono text-sm text-slate-500">
-              {data.packages.length} packages indexed
-            </p>
+            <div className="w-full sm:w-auto">
+              <label
+                htmlFor="package-search"
+                className="mb-2 block text-xs font-medium text-slate-400"
+              >
+                Search by package name or version
+              </label>
+              <input
+                id="package-search"
+                type="search"
+                value={packageQuery}
+                onChange={(event) => setPackageQuery(event.target.value)}
+                placeholder="e.g. firefox or 1.2.0"
+                className="min-h-11 w-full rounded-md border border-white/15 bg-slate-900 px-3 text-sm text-white placeholder:text-slate-500 focus:border-cyan-300 focus:outline-none sm:w-72"
+              />
+            </div>
           )}
         </div>
+        {data && (
+          <p className="mb-4 font-mono text-sm text-slate-500" aria-live="polite">
+            {normalizedQuery
+              ? `${filteredPackages.length} of ${data.packages.length} packages`
+              : `${data.packages.length} packages indexed`}
+          </p>
+        )}
         {loading && (
           <p className="rounded-lg border border-white/10 bg-white/[0.03] p-5 text-sm text-slate-400">
             Loading package index…
@@ -156,9 +186,14 @@ export default function Home() {
             No packages have been published yet.
           </p>
         )}
+        {data && data.packages.length > 0 && filteredPackages.length === 0 && (
+          <p className="rounded-lg border border-white/10 bg-white/[0.03] p-5 text-sm text-slate-400">
+            No packages match “{packageQuery.trim()}”.
+          </p>
+        )}
         {data && data.packages.length > 0 && (
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {data.packages.map((pkg) => {
+            {filteredPackages.map((pkg) => {
               const latest = sortVersionsDesc(pkg.versions)[0];
               return (
                 <li key={pkg.name}>
