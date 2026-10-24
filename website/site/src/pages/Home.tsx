@@ -288,8 +288,8 @@ gpg --with-colons --show-keys grizak.asc | awk -F: '/^fpr:/ {print $10; exit}'`}
 sudo pacman-key --add grizak.asc
 sudo pacman-key --lsign-key "$FPR"`}</code>
             </pre>
-            <p className="mb-2 mt-5 text-xs uppercase tracking-wider text-slate-500">
-              Add to /etc/pacman.conf
+            <p className="mb-2 mt-5 text-xs tracking-wider text-slate-500">
+              ADD TO /etc/pacman.conf
             </p>
             <pre className="code-panel">
               <code>{`[grizak]
@@ -326,7 +326,9 @@ sudo pacman -S <package-name>`}</code>
             </div>
             <div className="flex justify-between gap-4 px-4 py-3 text-sm">
               <dt className="text-slate-400">RPM</dt>
-              <dd className="min-w-0 break-words text-right font-mono text-slate-200">Signed repomd.xml</dd>
+              <dd className="min-w-0 break-words text-right font-mono text-slate-200">
+                Signed repomd.xml
+              </dd>
             </div>
             <div className="flex justify-between gap-4 px-4 py-3 text-sm">
               <dt className="text-slate-400">Arch</dt>
