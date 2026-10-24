@@ -6,42 +6,42 @@
       {
         "installcommand": "sudo apt install cppmake",
         "path": "apt/pool/cppmake_0.2.3_linux_amd64.deb",
-        "size": 1179222,
-        "sha256": "18a588411d5cba00dd72c4a4561d502210c46550e07b65bef482c0516d2a72d2"
+        "size": 1179220,
+        "sha256": "3e8d3fb7156036f37840fcb2999d3162ef5fa482af2ed7ed55c66be5f8614ce2"
       },
       {
         "installcommand": "sudo apt install cppmake",
         "path": "apt/pool/cppmake_0.2.3_linux_arm64.deb",
         "size": 1085464,
-        "sha256": "da97c1c306c8e7b80b5b152f7be9ab6b12cc57c392458f9170addef4175a5897"
+        "sha256": "689cc859dd8096b651e94869b504dc3541c3239748a86e1615bdc846b7af9a7e"
       }
     ],
     "arch": [
       {
         "installcommand": "sudo pacman -S cppmake",
         "path": "arch/aarch64/cppmake_0.2.3_linux_arm64.pkg.tar.zst",
-        "size": 1095638,
-        "sha256": "048a412bea459420763ed320d073ae73e954bc08280bf82ef3e25b49fc32d990"
+        "size": 1095634,
+        "sha256": "929b3a1a4b0495210e6bf11ea48e80ce32a5ba96c6e61d8debb2e68c206ba556"
       },
       {
         "installcommand": "sudo pacman -S cppmake",
         "path": "arch/x86_64/cppmake_0.2.3_linux_amd64.pkg.tar.zst",
-        "size": 1198871,
-        "sha256": "cdf4f48e6e958d2266b5d2a58899740f8e199dbe0bc5a458939720444d484e23"
+        "size": 1198870,
+        "sha256": "1df7516110db3abfa54f0b2e495ff2059dd3f0b0c8f1af70ac3ce00a471df768"
       }
     ],
     "rpm": [
       {
         "installcommand": "sudo dnf install cppmake",
         "path": "rpm/cppmake_0.2.3_linux_amd64.rpm",
-        "size": 1209110,
-        "sha256": "d54a747f9aa21eb8ffb14f11e215cf3afd071f5593742d354433542fe72c0058"
+        "size": 1209112,
+        "sha256": "4b5d90164ce5deb174585b6b323f8dd41e8baec1cc7f2fff2373ed398f0f32d0"
       },
       {
         "installcommand": "sudo dnf install cppmake",
         "path": "rpm/cppmake_0.2.3_linux_arm64.rpm",
         "size": 1111523,
-        "sha256": "0cd29d307afc036c3d7eeb7e9cee203a69a630b56b7e9c64b07f8b77af6105be"
+        "sha256": "cefebf876dbd82ff7145e832e69d90494da47ce405477f0bc11a9a164b185c6a"
       }
     ]
   },
