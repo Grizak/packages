@@ -26,3 +26,17 @@ Priority: optional
 Homepage: https://github.com/Grizak/cppmake
 Description: Simple build generator written in go
 
+Package: wick
+Version: 4.0.0
+Architecture: arm64
+Maintainer: Isak Grönlund <gronlundisak11@gmail.com> (https://isaksweb.xyz)
+Installed-Size: 96117
+Filename: pool/wick_4.0.0_linux_arm64.deb
+Size: 40222824
+MD5sum: 2d03066961cd4c570970d3d4d2d768d1
+SHA1: 3b161cf405689ce5ccd058554142d795d53faffb
+SHA256: 65a53c0b21c7a0726450f8d469cbb569152c7ee31aba58b294b42350ab7af0fe
+Priority: optional
+Homepage: https://github.com/Grizak/Wick
+Description: WICK Programming Language - A simple and efficient programming language for modern development.
+
