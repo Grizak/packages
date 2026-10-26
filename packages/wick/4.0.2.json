@@ -1,0 +1,51 @@
+{
+  "name": "wick",
+  "version": "4.0.2",
+  "pkgs": {
+    "apt": [
+      {
+        "installcommand": "sudo apt install wick",
+        "path": "apt/pool/wick_4.0.2_linux_amd64.deb",
+        "size": 41525370,
+        "sha256": "50ae34a14bc9963fc1fb5ffb2cb224e10d06c9bda4d8b684982b50e73954d90f"
+      },
+      {
+        "installcommand": "sudo apt install wick",
+        "path": "apt/pool/wick_4.0.2_linux_arm64.deb",
+        "size": 40222830,
+        "sha256": "22618e0dd180b384827d238783d77e1a604cfae2ecaad2757810110cc0c459d3"
+      }
+    ],
+    "arch": [
+      {
+        "installcommand": "sudo pacman -S wick",
+        "path": "arch/aarch64/wick_4.0.2_linux_arm64.pkg.tar.zst",
+        "size": 38750107,
+        "sha256": "ab2913d7a54c2f28a72564171ba5ed5acb425f3165e0082eae13da00fe4504d9"
+      },
+      {
+        "installcommand": "sudo pacman -S wick",
+        "path": "arch/x86_64/wick_4.0.2_linux_amd64.pkg.tar.zst",
+        "size": 40488080,
+        "sha256": "81b460f6cb21d48a00db111d9038a51af88779df91bb42e27c9f05ae401a7a20"
+      }
+    ],
+    "rpm": [
+      {
+        "installcommand": "sudo dnf install wick",
+        "path": "rpm/wick_4.0.2_linux_amd64.rpm",
+        "size": 42860500,
+        "sha256": "be90573581d856e6adcbf93874d7b7339b4f749bc1b4a73a7c71bfbef20f8257"
+      },
+      {
+        "installcommand": "sudo dnf install wick",
+        "path": "rpm/wick_4.0.2_linux_arm64.rpm",
+        "size": 41278610,
+        "sha256": "95832f45b88bcc73841abcce21abc6e8ddeea4439621524708cbb3681c324ba3"
+      }
+    ]
+  },
+  "description": "WICK Programming Language - A simple and efficient programming language for modern development.",
+  "website": "https://github.com/Grizak/Wick",
+  "maintainer": "Isak Grönlund \u003cgronlundisak11@gmail.com\u003e (https://isaksweb.xyz)"
+}

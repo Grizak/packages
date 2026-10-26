@@ -54,3 +54,17 @@ Priority: optional
 Homepage: https://github.com/Grizak/Wick
 Description: WICK Programming Language - A simple and efficient programming language for modern development.
 
+Package: wick
+Version: 4.0.2
+Architecture: arm64
+Maintainer: Isak Grönlund <gronlundisak11@gmail.com> (https://isaksweb.xyz)
+Installed-Size: 96117
+Filename: pool/wick_4.0.2_linux_arm64.deb
+Size: 40222830
+MD5sum: 4f7c54410320a150b02b33d069d8afd7
+SHA1: 0ae0074309372ef47017cb5fb232391476f540a6
+SHA256: 22618e0dd180b384827d238783d77e1a604cfae2ecaad2757810110cc0c459d3
+Priority: optional
+Homepage: https://github.com/Grizak/Wick
+Description: WICK Programming Language - A simple and efficient programming language for modern development.
+
