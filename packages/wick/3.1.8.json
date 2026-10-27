@@ -23,7 +23,7 @@
         "installcommand": "sudo dnf install wick",
         "path": "rpm/wick_3.1.8_linux_amd64.rpm",
         "size": 62918772,
-        "sha256": "ebcd9a2cd5ad2cd99f20d06d3d70b392adb284d1c4c97c1376ee8f6083efb98f"
+        "sha256": "5bf3dd9ec6be1b5d7598061133b047bdb25f38f0f9cf249e7cdc33bf8c184486"
       }
     ]
   },
