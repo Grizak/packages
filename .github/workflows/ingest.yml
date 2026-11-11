@@ -19,11 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { path: tools, fetch-depth: 0 }
-      - uses: actions/checkout@v4
-        with: { ref: gh-pages, path: site }
 
       - name: Install tooling
-        run: sudo apt-get update && sudo apt-get install -y dpkg-dev apt-utils createrepo-c gnupg
+        run: sudo apt-get update && sudo apt-get install -y dpkg-dev apt-utils createrepo-c gnupg rpm zstd
 
       - name: Install go
         uses: actions/setup-go@v7
@@ -34,10 +32,24 @@ jobs:
           version: 8
 
       - name: Import signing key
-        run: echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        run: printf '%s' "$GPG_PRIVATE_KEY" | gpg --batch --import
 
-      - name: Fetch staged packages
-        run: gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir incoming
+      - name: Prepare workspace
+        run: mkdir -p site incoming
+
+      - name: Fetch packages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view pool --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 \
+            || gh release create pool --repo "$GITHUB_REPOSITORY" \
+                 --title "Package pool" --notes "Archive of all published packages" --latest=false
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir incoming
+          gh release upload pool incoming/* --repo "$GITHUB_REPOSITORY" --clobber
+          rm -rf incoming/*
+          gh release download pool --repo "$GITHUB_REPOSITORY" --dir incoming --clobber
 
       - name: Update indexes
         env:
@@ -45,22 +57,7 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: tools/scripts/ingest.sh
 
-      - name: Check for changes
-        id: changes
-        run: |
-          base="${{ github.event.before }}"
-          if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ]; then
-            echo "No base commit to compare against, building"
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          elif git diff --quiet "$base" HEAD -- website/site/; then
-            echo "No changes to website/site/, skipping build"
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Build
-        if: steps.changes.outputs.changed == 'true'
         run: |
           cd tools/website/site
           pnpm install
@@ -71,14 +68,27 @@ jobs:
         run: |
           go run tools/website/generate.go -site-dir site/ -meta-file package-meta.json
 
-      - name: Publish
-        working-directory: site
+      - name: Install rclone
+        run: curl -fsSL https://rclone.org/install.sh | sudo bash
+
+      - name: Verify staged site is complete
         run: |
-          git config user.name  "package-bot"
-          git config user.email "package-bot@users.noreply.github.com"
-          git add -A
-          git commit -m "publish $TAG"
-          git push
+          for f in index.html key.asc \
+                   apt/dists/stable/Release apt/dists/stable/InRelease \
+                   rpm/repodata/repomd.xml \
+                   arch/x86_64/grizak.db arch/aarch64/grizak.db; do
+            [ -s "site/$f" ] || { echo "Missing site/$f, refusing to sync" >&2; exit 1; }
+          done
+
+      - name: Sync to R2
+        env:
+          RCLONE_CONFIG_CDN_TYPE: s3
+          RCLONE_CONFIG_CDN_PROVIDER: Cloudflare
+          RCLONE_CONFIG_CDN_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          RCLONE_CONFIG_CDN_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          RCLONE_CONFIG_CDN_ENDPOINT: ${{ vars.R2_ENDPOINT }}
+          RCLONE_CONFIG_CDN_NO_CHECK_BUCKET: "true"
+        run: rclone sync site cdn:repo --checksum
 
       - name: Cleanup staging release
         run: gh release delete "$TAG" --repo "$GITHUB_REPOSITORY" --cleanup-tag --yes

@@ -13,7 +13,10 @@ sign() {
 
 # ---------- apt ----------
 mkdir -p apt/pool
-cp "$ROOT"/incoming/*.deb apt/pool/ 2>/dev/null || true
+shopt -s nullglob
+debs=("$ROOT"/incoming/*.deb)
+(( ${#debs[@]} )) && cp "${debs[@]}" apt/pool/
+shopt -u nullglob
 (
   cd apt
   for arch in amd64 arm64; do
@@ -35,7 +38,10 @@ cp "$ROOT"/incoming/*.deb apt/pool/ 2>/dev/null || true
 
 # ---------- rpm ----------
 mkdir -p rpm
-cp "$ROOT"/incoming/*.rpm rpm/ 2>/dev/null || true
+shopt -s nullglob
+rpms=("$ROOT"/incoming/*.rpm)
+(( ${#rpms[@]} )) && cp "${rpms[@]}" rpm/
+shopt -u nullglob
 
 PASSFILE="$(mktemp)"
 chmod 600 "$PASSFILE"
