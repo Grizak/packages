@@ -2,10 +2,10 @@ name = "pkg-repo"
 main = "src/index.js"
 compatibility_date = "2026-01-01"
 
-[[r2_buckets]]
-binding = "REPO"
-bucket_name = "repo"
-
 routes = [
   { pattern = "pkg.isaksweb.xyz/*", zone_name = "isaksweb.xyz" }
 ]
+
+[[r2_buckets]]
+binding = "REPO"
+bucket_name = "repo"
