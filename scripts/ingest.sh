@@ -2,7 +2,6 @@
 set -euo pipefail
 ROOT="$PWD"
 cd site
-touch .nojekyll
 gpg --armor --export "$GPG_KEY_ID" > key.asc
 gpg --with-colons --show-keys key.asc | awk -F: '/^fpr:/ {print $10; exit}' > fingerprint.txt
 sign() {
