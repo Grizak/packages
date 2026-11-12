@@ -4,7 +4,7 @@ on:
     types: [publish]
 
 concurrency:
-  group: ingest # serialise publishes so index updates don't race
+  group: ingest # serialize publishes so index updates don't race
   cancel-in-progress: false
 
 permissions:
