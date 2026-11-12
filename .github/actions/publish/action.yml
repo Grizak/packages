@@ -1,5 +1,5 @@
 name: Publish to package repo
-description: Build packages and publish them to the central repo
+description: Build packages, add them to the central pool and trigger an index rebuild
 inputs:
   build-command: { default: make package }
   build-dir: { default: build }
@@ -12,7 +12,7 @@ runs:
       shell: bash
       run: ${{ inputs.build-command }}
 
-    - name: Stage and dispatch
+    - name: Upload to pool and dispatch
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.token }}
@@ -23,7 +23,22 @@ runs:
         files=("$BUILD_DIR"/*.deb "$BUILD_DIR"/*.rpm "$BUILD_DIR"/*.pkg.tar.zst)
         [ ${#files[@]} -gt 0 ] || { echo "No packages found in $BUILD_DIR"; exit 1; }
 
-        tag="incoming-${GITHUB_REPOSITORY//\//-}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-        gh release create "$tag" --repo "$REPO" --prerelease \
-          --title "$tag" --notes "From $GITHUB_REPOSITORY@$GITHUB_SHA" "${files[@]}"
-        gh api "repos/$REPO/dispatches" -f event_type=publish -f "client_payload[tag]=$tag"
+        # Create the pool once; ignore the error if another publish created it first
+        gh release view pool --repo "$REPO" >/dev/null 2>&1 \
+          || gh release create pool --repo "$REPO" --title "Package pool" \
+               --notes "Archive of all published packages" --latest=false \
+          || true
+
+        # Published filenames must never change; clients cache them as immutable
+        existing=$(gh release view pool --repo "$REPO" --json assets --jq '.assets[].name')
+        for f in "${files[@]}"; do
+          name=$(basename "$f")
+          if grep -qxF "$name" <<< "$existing"; then
+            echo "$name is already in the pool. Bump the version instead of rebuilding it." >&2
+            exit 1
+          fi
+        done
+
+        gh release upload pool "${files[@]}" --repo "$REPO"
+        gh api "repos/$REPO/dispatches" -f event_type=publish \
+          -f "client_payload[source]=$GITHUB_REPOSITORY@$GITHUB_SHA"

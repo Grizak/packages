@@ -43,12 +43,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release view pool --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 \
-            || gh release create pool --repo "$GITHUB_REPOSITORY" \
-                 --title "Package pool" --notes "Archive of all published packages" --latest=false
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir incoming
-          gh release upload pool incoming/* --repo "$GITHUB_REPOSITORY" --clobber
-          rm -rf incoming/*
           gh release download pool --repo "$GITHUB_REPOSITORY" --dir incoming --clobber
 
       - name: Update indexes
@@ -89,6 +83,3 @@ jobs:
           RCLONE_CONFIG_CDN_ENDPOINT: ${{ vars.R2_ENDPOINT }}
           RCLONE_CONFIG_CDN_NO_CHECK_BUCKET: "true"
         run: rclone sync site cdn:repo --checksum
-
-      - name: Cleanup staging release
-        run: gh release delete "$TAG" --repo "$GITHUB_REPOSITORY" --cleanup-tag --yes
