@@ -5,7 +5,6 @@ ROOT="$PWD"
 cd site
 
 : "${GPG_KEY_ID:?GPG_KEY_ID must be set}"
-: "${GPG_PASSPHRASE:?GPG_PASSPHRASE must be set}"
 
 export LC_ALL=C
 
