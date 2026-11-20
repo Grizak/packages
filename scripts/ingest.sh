@@ -148,9 +148,9 @@ for dir in arch/*/; do
     sudo chown -R "$(id -u):$(id -g)" "$dir"
   fi
 
-  cp -f "$dir/grizak.db.tar.zst" "$dir/grizak.db"
-  cp -f "$dir/grizak.files.tar.zst" "$dir/grizak.files"
-
+  cp --remove-destination "$dir/grizak.db.tar.zst" "$dir/grizak.db"
+  cp --remove-destination "$dir/grizak.files.tar.zst" "$dir/grizak.files"
+  
   # repo-add signs the database artifact; sign the published filename too.
   sign --detach-sign --no-armor -o "$dir/grizak.db.sig" "$dir/grizak.db"
 done
